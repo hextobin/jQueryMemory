@@ -1,0 +1,29 @@
+
+
+.container {
+  width: 1080px;
+  margin: auto;
+}
+
+.card {
+  height: 200px;
+  width: 150px;
+  background: lightblue;
+  float: left;
+  margin: 10px;
+  text-align: center;
+  border-radius: 5px;
+  box-shadow: 10px 10px 50px #ccc;
+  box-sizing: border-box;
+  
+}
+
+.card:hover {
+  cursor: pointer;
+  border: 3px solid rgb(196, 195, 195);
+}
+
+.card p {
+  font-size: 48px;
+  color: blue;
+}
