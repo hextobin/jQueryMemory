@@ -32,7 +32,7 @@ $(document).ready(function() {
       
       $('.card').on('click', function() {
         if (app.turned_over === 0 || app.turned_over === 1) {
-          $(this).html('<p>' + $(this).data('cardValue') + '</p>' ).addClass('selected')
+          $(this).html('<div><p>' + $(this).data('cardValue') + '</p></div>' ).addClass('selected')
           app.turned_over += 1
           app.checkMatch()
         }
@@ -43,14 +43,29 @@ $(document).ready(function() {
         if ($('.selected').first().data('cardValue') === $('.selected').last().data('cardValue')) {
           // cards matched
           // remove cards
+
           $('.selected').each(function() {
-            $(this).animate({opacity: 0}).removeClass('unmatched')
+            $(this).animate({opacity: 0})
           })
-          $('.selected').each(function() {
-            $(this).removeClass('selected')
-          })
-          app.turned_over = 0
-          app.checkWin()
+
+          setTimeout(function () {
+            $('.selected').each(function() {
+              $(this).removeClass('unmatched').removeClass('selected').addClass('no-hover')
+              app.turned_over = 0
+              app.checkWin()
+            })
+          }, 1000)
+
+          // $('.selected').each(function() {
+          //   $(this).animate({opacity: 0}).removeClass('unmatched')
+          // })
+
+
+          // $('.selected').each(function() {
+          //   $(this).removeClass('selected')
+          // })
+          // app.turned_over = 0
+          // app.checkWin()
           
         } else {
           // cards didn't match
