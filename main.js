@@ -1,7 +1,10 @@
 $(document).ready(function() {
   var app = {
     cards: [1,1,2,2,3,3,4,4,5,5,6,6],
+    turned_over: 0,
+    color_classes: ['clr-1', 'clr-1', 'clr-2', 'clr-2', 'clr-3', 'clr-3', 'clr-4', 'clr-4', 'clr-5', 'clr-5', 'clr-6', 'clr-6'],
     init: function() {
+      app.colorCards()
       app.shuffle()
     },
     shuffle: function() {
@@ -26,9 +29,13 @@ $(document).ready(function() {
       app.clickHandlers()
     },
     clickHandlers: function() {
+      
       $('.card').on('click', function() {
-        $(this).html('<p>' + $(this).data('cardValue') + '</p>' ).addClass('selected')
-        app.checkMatch()
+        if (app.turned_over === 0 || app.turned_over === 1) {
+          $(this).html('<p>' + $(this).data('cardValue') + '</p>' ).addClass('selected')
+          app.turned_over += 1
+          app.checkMatch()
+        }
       })
     },
     checkMatch: function() {
@@ -42,17 +49,19 @@ $(document).ready(function() {
           $('.selected').each(function() {
             $(this).removeClass('selected')
           })
+          app.turned_over = 0
           app.checkWin()
           
         } else {
           // cards didn't match
           // flip cards back over
-          console.log('tester')
           setTimeout(function() {
+            app.turned_over = 0
             $('.selected').each(function() {
               $(this).html(' ').removeClass('selected')
               })
             }, 1000)
+
         }
       }
     },
@@ -60,6 +69,13 @@ $(document).ready(function() {
       if ( $('.unmatched').length === 0 ) {
         $('.container').html('<h1>You Won!</h1>')
       }
+    },
+    colorCards: function() {
+      $('.card').each(function() {
+        var rand_color_index = Math.floor(Math.random() * app.color_classes.length)
+        $(this).addClass(app.color_classes[rand_color_index])
+        app.color_classes.splice(rand_color_index, 1)
+      })
     }
   }
   app.init()
